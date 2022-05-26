@@ -2,17 +2,17 @@
  * Copyright (c) 2022. Owned by Squel. All rights reserved
  */
 
-package com.demo.user.controller;
+package com.example.demo.user.controller;
 
-import com.demo.user.dao.UserRepository;
-import com.demo.user.dto.UserDto;
-import com.demo.user.entity.User;
-import com.demo.user.exception.ServiceException;
-import com.demo.user.service.IUserService;
+import com.example.demo.user.entity.User;
+import com.example.demo.user.so.Result;
+import com.example.demo.user.so.ResultCode;
+import com.example.demo.user.dao.UserRepository;
+import com.example.demo.user.dto.UserDto;
+import com.example.demo.user.exception.ServiceException;
+import com.example.demo.user.service.IUserService;
 
 
-import com.demo.user.so.Result;
-import com.demo.user.so.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @ClassName UserController

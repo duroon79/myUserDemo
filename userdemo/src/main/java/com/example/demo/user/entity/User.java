@@ -2,7 +2,7 @@
  * Copyright (c) 2022. Owned by Squel. All rights reserved
  */
 
-package com.demo.user.entity;
+package com.example.demo.user.entity;
 
 
 

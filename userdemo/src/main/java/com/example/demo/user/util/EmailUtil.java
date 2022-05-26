@@ -2,7 +2,7 @@
  * Copyright (c) 2022. Owned by Squel. All rights reserved
  */
 
-package com.demo.user.util;
+package com.example.demo.user.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

@@ -2,10 +2,10 @@
  * Copyright (c) 2022. Owned by Squel. All rights reserved
  */
 
-package com.demo.user.service;
+package com.example.demo.user.service;
 
-import com.demo.user.entity.User;
-import com.demo.user.exception.ServiceException;
+import com.example.demo.user.entity.User;
+import com.example.demo.user.exception.ServiceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

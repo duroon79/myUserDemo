@@ -2,7 +2,7 @@
  * Copyright (c) 2022. Owned by Squel. All rights reserved
  */
 
-package com.demo.user.so;
+package com.example.demo.user.so;
 
 /**
  * 公共的返回码

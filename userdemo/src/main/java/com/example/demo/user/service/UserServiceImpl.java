@@ -2,13 +2,13 @@
  * Copyright (c) 2022. Owned by Squel. All rights reserved
  */
 
-package com.demo.user.service;
+package com.example.demo.user.service;
 
-import com.demo.user.dao.UserRepository;
-import com.demo.user.entity.User;
-import com.demo.user.exception.ServiceException;
-import com.demo.user.so.ResultCode;
-import com.demo.user.util.EmailUtil;
+import com.example.demo.user.entity.User;
+import com.example.demo.user.dao.UserRepository;
+import com.example.demo.user.exception.ServiceException;
+import com.example.demo.user.so.ResultCode;
+import com.example.demo.user.util.EmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @ClassName UserService

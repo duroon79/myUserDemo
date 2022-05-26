@@ -2,7 +2,7 @@
  * Copyright (c) 2022. Owned by Squel. All rights reserved
  */
 
-package com.demo;
+package com.example.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

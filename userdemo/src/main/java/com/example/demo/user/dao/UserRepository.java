@@ -2,8 +2,8 @@
  * Copyright (c) 2022. Owned by Squel. All rights reserved
  */
 
-package com.demo.user.dao;
-import com.demo.user.entity.User;
+package com.example.demo.user.dao;
+import com.example.demo.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

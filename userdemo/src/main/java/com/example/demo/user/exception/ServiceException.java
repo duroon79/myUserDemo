@@ -2,9 +2,9 @@
  * Copyright (c) 2022. Owned by Squel. All rights reserved
  */
 
-package com.demo.user.exception;
+package com.example.demo.user.exception;
 
-import com.demo.user.so.ResultCode;
+import com.example.demo.user.so.ResultCode;
 import lombok.Getter;
 
 /**

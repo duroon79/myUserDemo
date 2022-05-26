@@ -2,12 +2,11 @@
  * Copyright (c) 2022. Owned by Squel. All rights reserved
  */
 
-package com.demo.user.dto;
+package com.example.demo.user.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import java.util.Date;
 
 /**

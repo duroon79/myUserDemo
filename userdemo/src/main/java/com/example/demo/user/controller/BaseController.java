@@ -2,10 +2,10 @@
  * Copyright (c) 2022. Owned by Squel. All rights reserved
  */
 
-package com.demo.user.controller;
+package com.example.demo.user.controller;
 
-import com.demo.user.so.Result;
-import com.demo.user.so.ResultCode;
+import com.example.demo.user.so.Result;
+import com.example.demo.user.so.ResultCode;
 
 /**
  * @ClassName BaseController
