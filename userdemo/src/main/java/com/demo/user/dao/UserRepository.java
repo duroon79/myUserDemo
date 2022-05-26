@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+
 /**
  * @InterfaceName UserRepository
  * @Description 对User表进行CURD操作
@@ -36,8 +38,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
      * @return 更新条数
      */
     @Modifying
-    @Query(value="update User set userName=?1,email=?2,name=?3,age=?4 where id=?5")
-    int updateUser(String userName,String email,String name,int age,Long id);
+    @Query(value="update User set userName=?1,email=?2,name=?3,age=?4,updatedDate=?5 where id=?6")
+    int updateUser(String userName, String email, String name, int age, Date updateDate, Long id);
 
     /**
      * 逻辑删除用户

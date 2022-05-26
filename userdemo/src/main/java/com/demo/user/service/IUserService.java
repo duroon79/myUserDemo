@@ -7,6 +7,7 @@ package com.demo.user.service;
 import com.demo.user.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @InterfaceName IUserService
@@ -35,10 +36,19 @@ public interface IUserService {
      */
     public void deelteUser(List<User> userList);
 
+
+
+    /**
+     * 查找一个用户
+     * @param ids 用户id
+     * @return 用户信息
+     */
+    public List<User> findByIds(List<Long> ids);
+
     /**
      * 查找所有用户
-     * @param ids 用户id
-     * @return 返回所有用户信息
+     * @return
      */
-    public List<User> findAllById(List<Long> ids);
+    public List<User> findAll();
+
 }

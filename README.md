@@ -2,8 +2,6 @@
 1. module: starter
 1. class: com.demo.UserApplication
 
-##接口说明文档
-UserDemo RESTFUL接口说明.docx
 
 ##发件箱配置(建议修改)
 spring:
@@ -24,3 +22,6 @@ spring:
 3.运行userdemo.sh <source_code_path> <docker_file_path> <image_tag> 例如:
   ./userdemo.sh /app/user/userdemo /app/user 3
 4.使用如下链接访问RESTFUL API http://server_ip:96/user/<inferface>
+
+##接口说明文档地址
+http://server_ip:96/user/swagger-ui/index.html#

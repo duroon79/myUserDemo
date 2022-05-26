@@ -7,15 +7,16 @@ package com.demo.user.service;
 import com.demo.user.dao.UserRepository;
 import com.demo.user.entity.User;
 import com.demo.user.exception.ServiceException;
-import com.demo.user.so.ErrorEnum;
+import com.demo.user.so.ResultCode;
 import com.demo.user.util.EmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @ClassName UserService
@@ -46,13 +47,15 @@ public class UserServiceImpl implements IUserService{
         //先检查注册用户是否存在，如果存在需要抛出异常
         User userDB = this.userRepository.findByUserName(user.getUserName());
         if(userDB == null){
+            user.setCreateDate(new Date());
+            user.setUpdatedDate(new Date());
             userRepository.save(user);
             //发送注册成功邮件
             emailUtil.sendEmail(mailFrom,user.getEmail(),subject,mailContent);
         }
         else{
 
-            throw new ServiceException(ErrorEnum.USER_EXIST);
+            throw new ServiceException(ResultCode.USER_EXIST);
         }
     }
 
@@ -63,7 +66,7 @@ public class UserServiceImpl implements IUserService{
     @Transactional
     public void updateUser(List<User> userList){
         userList.forEach((e)->{
-            userRepository.updateUser(e.getUserName(),e.getEmail(),e.getName(),e.getAge(),e.getId());
+            userRepository.updateUser(e.getUserName(),e.getEmail(),e.getName(),e.getAge(),new Date(),e.getId());
         });
     }
 
@@ -80,11 +83,20 @@ public class UserServiceImpl implements IUserService{
     }
 
     /**
-     * 查找所有用户
-     * @return 返回所有用户信息
+     * 查找一个用户
+     * @param ids 用户id
+     * @return 用户信息
      */
-    public List<User> findAllById(List<Long> ids){
-        return userRepository.findAllById(ids);
+    public List<User> findByIds (List<Long> ids){
+       return userRepository.findAllById(ids);
+    }
+
+    /**
+     * 查找所有用户
+     * @return 所有用户信息
+     */
+    public List<User> findAll(){
+        return userRepository.findAll();
     }
 
 }

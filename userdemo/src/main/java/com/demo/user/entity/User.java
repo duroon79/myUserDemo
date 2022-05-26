@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 /**
@@ -26,7 +27,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler"})
-public class User {
+public class User{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
@@ -42,5 +43,13 @@ public class User {
     private String email;
     @Column(name="is_deleted")
     private String isDeleted;
+    @Column(name="create_date")
+    private Date createDate;
+    @Column(name="create_by")
+    private Long createdBy;
+    @Column(name="update_date")
+    private Date updatedDate;
+    @Column(name="update_by")
+    private Long updatedBy;
 
 }

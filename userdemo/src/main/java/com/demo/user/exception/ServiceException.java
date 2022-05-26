@@ -4,7 +4,7 @@
 
 package com.demo.user.exception;
 
-import com.demo.user.so.ErrorEnum;
+import com.demo.user.so.ResultCode;
 import lombok.Getter;
 
 /**
@@ -20,19 +20,19 @@ public class ServiceException extends RuntimeException {
     /**
      * 自定义异常枚举类
      */
-    private ErrorEnum errorEnum;
+    private ResultCode resultCode;
     //异常代码
-    private String code;
+    private int code;
     //异常消息
     private String errorMsg;
     public ServiceException() {
         super();
     }
 
-    public ServiceException(ErrorEnum errorEnum) {
-        super("{errorCode:" + errorEnum.getCode() + ",errorMsg:" + errorEnum.getMsg() + "}");
-        this.errorEnum = errorEnum;
-        this.code = errorEnum.getCode();
-        this.errorMsg = errorEnum.getMsg();
+    public ServiceException(ResultCode resultCode) {
+        super("{errorCode:" + resultCode.code() + ",errorMsg:" + resultCode.message() + "}");
+        this.resultCode = resultCode;
+        this.code = resultCode.code();
+        this.errorMsg = resultCode.message();
     }
 }

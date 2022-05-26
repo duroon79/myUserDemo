@@ -10,10 +10,13 @@ import com.demo.user.entity.User;
 import com.demo.user.exception.ServiceException;
 import com.demo.user.service.IUserService;
 
-import com.demo.user.so.ErrorEnum;
-import com.demo.user.so.UnionResponse;
 
-
+import com.demo.user.so.Result;
+import com.demo.user.so.ResultCode;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import org.assertj.core.util.Arrays;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @ClassName UserController
@@ -32,11 +36,10 @@ import java.util.List;
  * Version 1.0
  **/
 @RestController
-public class UserController extends BaseController{
+@Api(tags = "用户管理接口")
+public class UserController<T> extends BaseController{
 
-    private static final String REGISTER_USER_SUCCESS = "用户注册成功";
-    private static final String UPDATE_USER_SUCCESS = "用户更新成功";
-    private static final String DELETE_USER_SUCCESS = "用户删除成功";
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -47,8 +50,9 @@ public class UserController extends BaseController{
      * @param userDto 用户传输对象
      * @return UnionResponse 返回信息
      */
-    @PostMapping("/registerUser")
-    public UnionResponse registerUser(@RequestBody UserDto userDto){
+    @PostMapping("/user")
+    @ApiOperation(value = "注册用户", notes = "注册用户")
+    public Result registerUser(@RequestBody UserDto userDto){
         try{
             validateUser(userDto);
             User user = convertUserDTO(userDto);
@@ -58,9 +62,9 @@ public class UserController extends BaseController{
             userServiceImpl.registUser(user);
         }
         catch (ServiceException e){
-            return error(e.getMessage());
+            return error(e.getResultCode());
         }
-        return success(REGISTER_USER_SUCCESS);
+        return success();
     }
 
     /**
@@ -68,15 +72,16 @@ public class UserController extends BaseController{
      * @param userDtoList 待更新用户列表
      * @return 更新结果
      */
-    @PostMapping("/updateUser")
-    public UnionResponse updateUser(@RequestBody List<UserDto> userDtoList){
+    @PutMapping("/users")
+    @ApiOperation(value = "更新用户信息", notes = "更新一个或多个用户信息")
+    public Result updateUser(@RequestBody List<UserDto> userDtoList){
         List<User> userList = new ArrayList<User>();
         userDtoList.forEach((e) -> {
             validateUser(e);
             userList.add(convertUserDTO(e));
         });
         userServiceImpl.updateUser(userList);
-        return success(UPDATE_USER_SUCCESS);
+        return success();
     }
 
     /**
@@ -84,37 +89,58 @@ public class UserController extends BaseController{
      * @param userDtoList 待删除用户列表
      * @return
      */
-    @PostMapping("/deleteUser")
-    public UnionResponse deleteUser(@RequestBody List<UserDto> userDtoList){
+
+    @DeleteMapping("/users")
+    @ApiOperation(value = "逻辑删除用户", notes = "根据用户id删除一个或多个用户")
+    public Result deleteUser(@RequestBody List<UserDto> userDtoList){
         List<User> userList = new ArrayList<User>();
         userDtoList.forEach((e) -> {
             userList.add(convertUserDTO(e));
         });
         userServiceImpl.deelteUser(userList);
-        return success(DELETE_USER_SUCCESS);
+        return success();
 
     }
 
+
     /**
-     * 查找指定ID的所有用户
-     * @param userDtoList 用户id集合
+     * 查找所有用户信息
      * @return 用户信息
      */
-    @PostMapping("/findAllById")
-    public List<UserDto> findAllUser(@RequestBody List<UserDto> userDtoList){
-        List<Long> ids = new ArrayList<>();
-        userDtoList.forEach((e)->{
-            ids.add(e.getId());
-        });
-        List<User> userList = userServiceImpl.findAllById(ids);
+    @ApiOperation(value = "查询所有用户", notes = "查询所有用户")
+    @GetMapping("/users")
+    public Result<T> findAllUser(){
+
+        List<User> userList = userServiceImpl.findAll();
         List<UserDto> userDtos = new ArrayList<>();
         userList.forEach((e)->{
             UserDto userDto = new UserDto();
             BeanUtils.copyProperties(e,userDto);
             userDtos.add(userDto);
         });
-        return userDtos;
+        return data(ResultCode.SUCCESS,userDtos);
     }
+    @ApiOperation(value = "查询用户", notes = "根据用户id查询用户")
+    @ApiImplicitParam(paramType = "path", name = "ids", value = "用户id", dataType = "String", example = "1,2",
+            required = true)
+    @GetMapping("/users/{ids}")
+    public Result<User> findById(@PathVariable(value="ids") String id) {
+
+         List<Object> ids = Arrays.asList(id.split(","));
+        List<Long> idList = new ArrayList<>();
+        ids.forEach((e)->{
+            idList.add(new Long((String) e));
+        });
+        List<User> users = userServiceImpl.findByIds(idList);
+        List<UserDto> userDtos = new ArrayList<>();
+        users.forEach((e)->{
+            UserDto userDto = new UserDto();
+            BeanUtils.copyProperties(e,userDto);
+            userDtos.add(userDto);
+        });
+        return data(ResultCode.SUCCESS,userDtos);
+    }
+
     /**
      * 用户转换方法
      * @param userDto 用户传输对象
@@ -132,20 +158,20 @@ public class UserController extends BaseController{
      */
     private void validateUser(UserDto userDto){
         if(StringUtils.isEmpty(userDto.getUserName())){
-            throw new ServiceException(ErrorEnum.USER_NAME_IS_NOT_NULL);
+            throw new ServiceException(ResultCode.USER_NAME_IS_NOT_NULL);
         }
         if(StringUtils.isEmpty(userDto.getPassword())){
-            throw new ServiceException(ErrorEnum.PWD_IS_NOT_NULL);
+            throw new ServiceException(ResultCode.PWD_IS_NOT_NULL);
         }
         if(StringUtils.isEmpty(userDto.getEmail())){
-            throw new ServiceException(ErrorEnum.EMAIL_IS_NOT_NULL);
+            throw new ServiceException(ResultCode.EMAIL_IS_NOT_NULL);
         }
         if(userDto.getAge() == null){
-            throw new ServiceException(ErrorEnum.AGE_IS_NOT_NULL);
+            throw new ServiceException(ResultCode.AGE_IS_NOT_NULL);
         }
         //检查收件人地址格式是否正确
         if(userDto.getEmail().indexOf("@")==-1){
-            throw new ServiceException(ErrorEnum.EMAIL_FORMAT_NOT_CORRECT);
+            throw new ServiceException(ResultCode.EMAIL_FORMAT_NOT_CORRECT);
         }
     }
 }

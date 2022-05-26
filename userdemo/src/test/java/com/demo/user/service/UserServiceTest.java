@@ -30,7 +30,7 @@ public class UserServiceTest {
     @Test
     public void testRegistUser(){
         User user = new User();
-        user.setUserName("testUser");
+        user.setUserName("testUser2");
         user.setPassword("111111");
         user.setAge(10);
         user.setEmail("duroon@qq.com");
@@ -70,10 +70,15 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testFindUser(){
-        Long id = new Long(1L);
-        List idList = new ArrayList();
-        idList.add(id);
-        userService.findAllById(idList);
+    public void testFindUserByIds(){
+        List<Long> ids = new ArrayList<>();
+        ids.add(1L);
+        userService.findByIds(ids);
+    }
+
+    @Test
+    public void testFindAllUser(){
+
+        userService.findAll();
     }
 }

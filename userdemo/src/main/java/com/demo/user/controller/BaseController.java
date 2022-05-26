@@ -4,8 +4,8 @@
 
 package com.demo.user.controller;
 
-import com.demo.user.so.ResponseCode;
-import com.demo.user.so.UnionResponse;
+import com.demo.user.so.Result;
+import com.demo.user.so.ResultCode;
 
 /**
  * @ClassName BaseController
@@ -14,39 +14,36 @@ import com.demo.user.so.UnionResponse;
  * @Date 2022/5/21
  * Version 1.0
  **/
-public class BaseController {
+public class BaseController<T> {
     /**
      * 返回成功应答
-     * @param message  需要返回的消息
-     * @return UnionResponse
+     *
+     * @return Result 处理结果
      */
-    protected UnionResponse success(String message) {
-        return new UnionResponse()
-                .setCode(ResponseCode.Success)
-                .setMessage(message);
+    protected Result success() {
+        return Result.SUCCESS();
 
     }
 
     /**
-     * 返回失败应答
-     * @param message 需要返回的消息
-     * @return
+     * 返回系统错误
+     * @return 处理结果
      */
-    protected UnionResponse error(String message) {
-        return new UnionResponse()
-                .setCode(ResponseCode.Failed)
-                .setMessage(message);
+    protected Result error() {
+        return Result.FAIL();
     }
 
     /**
-     * 返回包含错误代码的失败应答
-     * @param exceptionCode 异常代码
-     * @param message 消息
-     * @return
+     * 返回业务相关错误
+     * @param resultCode 处理结果代码
+     * @return 处理结果
      */
-    protected UnionResponse error(String exceptionCode,String message) {
-        return new UnionResponse()
-                .setCode(exceptionCode)
-                .setMessage(message);
+    protected Result error(ResultCode resultCode) {
+        return Result.ERROR(resultCode);
+    }
+
+    protected Result<T> data(ResultCode resultCode,T data){
+        Result<T> result = new Result(resultCode,data);
+        return result;
     }
 }

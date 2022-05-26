@@ -7,6 +7,9 @@ package com.demo.user.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
+import java.util.Date;
+
 /**
  * @ClassName UserDto
  * @Description 用户数据传输类
@@ -30,4 +33,13 @@ public class UserDto {
     private String email;
 
     private String isDeleted;
+
+
+    private Date createDate;
+
+    private Long createdBy;
+
+    private Date updatedDate;
+
+    private Long updatedBy;
 }
